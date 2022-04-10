@@ -5,6 +5,7 @@ const server = http.createServer(app);
 const path = require("path");
 const { Server } = require("socket.io");
 const wsServer = new Server(server);
+let lightSwitch;
 
 const port = 3000;
 
@@ -17,18 +18,29 @@ app.get("/light", (req, res) => {
 });
 
 app.get("/switch", (req, res) => {
-  res.sendFile(path.join(__dirname, "html", "switch.html"));
+  if (!lightSwitch)
+    return res.sendFile(path.join(__dirname, "html", "switch.html"));
+  res.send("Sorry man, the switch is already in use");
 });
 
 wsServer.on("connection", (client) => {
   console.log("a user connected");
 
+  if (client.handshake.query.switch && !lightSwitch) {
+    lightSwitch = client;
+    lightSwitch.on("disconnect", () => {
+      console.log("light switch disconnected");
+      lightSwitch = undefined;
+    });
+  } else {
+    client.on("disconnect", () => {
+      console.log("user disconnected");
+    });
+  }
+
   client.on("toggle light", () => {
     console.log("toggle switch has been pressed");
-  });
-
-  client.on("disconnect", () => {
-    console.log("user disconnected");
+    wsServer.emit("toggle light");
   });
 });
 

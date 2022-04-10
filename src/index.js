@@ -29,6 +29,7 @@ wsServer.on("connection", (client) => {
 
   if (client.handshake.query.switch && !lightSwitch) {
     lightSwitch = client;
+    wsServer.emit("count lights", numberOfLights);
     lightSwitch.on("disconnect", () => {
       console.log("light switch disconnected");
       lightSwitch = undefined;

@@ -12,8 +12,18 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
       const wsConnection = io();
+      const lightbulbStatus = document.getElementById("light-status");
+      let toggleLight = 0;
       wsConnection.on("toggle light", () => {
         console.log("Light was toggled!");
+        toggleLight++;
+        lightbulbStatus.innerHTML = "";
+
+        if (toggleLight % 2 === 0) {
+          lightbulbStatus.innerText = "off";
+        } else {
+          lightbulbStatus.innerText = "on";
+        }
       });
     </script>
   </body>

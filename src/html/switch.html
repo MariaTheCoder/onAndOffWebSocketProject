@@ -5,9 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <title>Lightbulb</title>
+    <title>Switch</title>
   </head>
   <body>
+    <h3>
+      Connected lightbulbs:
+      <span id="lightbulb-count">0</span>
+    </h3>
     <button id="btn-toggle-light">Toggle light</button>
     <script src="/socket.io/socket.io.js"></script>
     <script>
@@ -16,9 +20,13 @@
           switch: true,
         },
       });
+      const lightbulbCount = document.getElementById("lightbulb-count");
       const button = document.getElementById("btn-toggle-light");
       button.addEventListener("click", () => {
         wsConnection.emit("toggle light");
+      });
+      wsConnection.on("count lights", (data) => {
+        lightbulbCount.innerText = data;
       });
     </script>
   </body>

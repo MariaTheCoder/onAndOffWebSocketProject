@@ -6,6 +6,7 @@ const path = require("path");
 const { Server } = require("socket.io");
 const wsServer = new Server(server);
 let lightSwitch;
+let numberOfLights = 0;
 
 const port = 3000;
 
@@ -33,8 +34,12 @@ wsServer.on("connection", (client) => {
       lightSwitch = undefined;
     });
   } else {
+    numberOfLights++;
+    wsServer.emit("count lights", numberOfLights);
     client.on("disconnect", () => {
       console.log("user disconnected");
+      numberOfLights--;
+      wsServer.emit("count lights", numberOfLights);
     });
   }
 

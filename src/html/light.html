@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
+
     <title>Lightbulb</title>
   </head>
   <body>
@@ -13,17 +13,13 @@
     <script>
       const wsConnection = io();
       const lightbulbStatus = document.getElementById("light-status");
-      let toggleLight = 0;
+      let toggleLight = false;
       wsConnection.on("toggle light", () => {
         console.log("Light was toggled!");
-        toggleLight++;
-        lightbulbStatus.innerHTML = "";
+        toggleLight = !toggleLight;
 
-        if (toggleLight % 2 === 0) {
-          lightbulbStatus.innerText = "off";
-        } else {
-          lightbulbStatus.innerText = "on";
-        }
+        if (toggleLight) lightbulbStatus.innerHTML = "on";
+        else lightbulbStatus.innerHTML = "off";
       });
     </script>
   </body>

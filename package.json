@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "cross-env NODE_ENV=development node src"
+    "dev": "cross-env NODE_ENV=development nodemon src"
   },
   "repository": {
     "type": "git",
@@ -22,5 +22,8 @@
     "cross-env": "^7.0.3",
     "express": "^4.17.3",
     "socket.io": "^4.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }

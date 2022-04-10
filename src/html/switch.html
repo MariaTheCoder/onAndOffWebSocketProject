@@ -11,7 +11,11 @@
     <button id="btn-toggle-light">Toggle light</button>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-      const socket = io();
+      const wsConnection = io();
+      const button = document.getElementById("btn-toggle-light");
+      button.addEventListener("click", () => {
+        wsConnection.emit("toggle light");
+      });
     </script>
   </body>
 </html>

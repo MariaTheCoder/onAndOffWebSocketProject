@@ -12,6 +12,9 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
       const wsConnection = io();
+      wsConnection.on("toggle light", () => {
+        console.log("Light was toggled!");
+      });
     </script>
   </body>
 </html>
